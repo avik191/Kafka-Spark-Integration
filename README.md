@@ -18,4 +18,7 @@ https://dzone.com/articles/running-apache-kafka-on-windows-os
 for running multiple kafka servers in local system create copies of server.properties file and change port of each and change the log.dir</b>
 for running kafka server in the cluster, in the server.properties file , change zookeeper.connect = ip:port where ip = ip of cluster or system where zookeeper is running.
 
-<b> -- 1. kafka_word_count.scala - Does word count of files streamed through 2 kafka servers. --</b>
+<b> -- 1. kafka_word_count.scala - Does word count of files streamed through 2 kafka servers. --</b></br>
+<b> -- 2. Fifa_Stats.scala - Does analysis on fifa player statistics using data frames in spark streaming--</b></br>
+<b> -- 3. LogParser.scala - Does analysis on which url's are visited masximum times using RDD in spark streaming--</b></br>
+
