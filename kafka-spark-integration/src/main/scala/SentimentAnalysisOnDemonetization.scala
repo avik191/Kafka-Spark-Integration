@@ -8,12 +8,15 @@ object SentimentAnalysisOnDemonetization {
 
   def main(args: Array[String]): Unit = {
     Logger.getLogger("org").setLevel(Level.ERROR)
+    
+    //Getting twitter data through socket
     val ssc = new StreamingContext("local[*]","SentimentAnalysis",Seconds(1))
     val lines = ssc.socketTextStream("127.0.0.1",9999,StorageLevel.MEMORY_AND_DISK_SER)
 
     val spark = SparkSession.builder().master("local[*]").getOrCreate();
     import spark.implicits._
 
+    // reading txt file as a data frame containing words and thier ratings.
     val rating = spark.read.option("header",false).option("inferSchema",false).textFile("G:\\sparkResources\\AFINN.txt")
     val wordRating = rating.withColumn("words",split($"value","\\s")(0))
                           .withColumn("rating",split($"value","\\s")(1))
@@ -22,13 +25,14 @@ object SentimentAnalysisOnDemonetization {
     wordRating.show()
 
     lines.foreachRDD((rdd,time) => {
-      val idt = rdd
-        .map(data => {
+      //mapping rdd to tweet_id and tweet_text and discarding the rest of data
+      val idt = rdd.map(data => {
                             val temp = data.split(",")
-                            if(temp.length == 15 ) (temp(0),temp(1))
-                            else ("none","none")
+                            if(temp.length == 15 ) (temp(0),temp(1)) //(number,text)
+                            else ("none","none") //(text,text)
                           }).toDF("tweet_id","tweet_text")
 
+      // filtering data to keep only those records whose id is not none and starts with "
       val idText = idt.filter($"tweet_id" =!= "none").filter($"tweet_id".startsWith("\""))
 
       val idTextWord = idText.withColumn("word",split($"tweet_text"," "))
