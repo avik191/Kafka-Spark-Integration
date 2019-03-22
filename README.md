@@ -21,4 +21,4 @@ for running kafka server in the cluster, in the server.properties file , change 
 <b> -- 1. kafka_word_count.scala - Does word count of files streamed through 2 kafka servers. --</b></br>
 <b> -- 2. Fifa_Stats.scala - Does analysis on fifa player statistics using data frames in spark streaming--</b></br>
 <b> -- 3. LogParser.scala - Does analysis on which url's are visited masximum times using RDD in spark streaming--</b></br>
-
+<b> -- 4. SentimentAnalysisOnDemonetization.scala - Does analysis on twitters data on demonetization and calculates &nbsp; &nbsp; positive and negative tweets through spark streaming--</b></br>
